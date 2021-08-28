@@ -23,10 +23,10 @@ void LookAndFeel::drawRotarySlider(juce::Graphics& g,
 
     auto bounds = Rectangle<float>(x, y, width, height);
 
-    g.setColour(Colour(97u, 18u, 167u));
+    g.setColour(Colours::black);
     g.fillEllipse(bounds);
 
-    g.setColour(Colour(255u, 154u, 1u));
+    g.setColour(Colours::white);
     g.drawEllipse(bounds, 1.f); 
 
     if (auto* rswl = dynamic_cast<RotarySliderWithLabels*>(&slider))
@@ -403,6 +403,15 @@ void ResponseCurveComponent::resized()
 
         g.setColour(gDb == 0.f ? Colour(0u, 172u, 1u) : Colours::lightgrey);
         g.drawFittedText(str, r, juce::Justification::centred, 1);
+
+        str.clear();
+        str << (gDb - 24.f);
+
+        r.setX(1);
+        textWidth = g.getCurrentFont().getStringWidth(str);
+        r.setSize(textWidth, fontHeight);
+        g.setColour(Colours::lightgrey);
+        g.drawFittedText(str, r, juce::Justification::centred, 1);
     }
 
 }
@@ -470,7 +479,7 @@ SimpleEQAudioProcessorEditor::~SimpleEQAudioProcessorEditor()
 void SimpleEQAudioProcessorEditor::paint (juce::Graphics& g)
 {
     using namespace juce;
-    g.fillAll(Colours::darkblue);
+    g.fillAll(Colour(24u, 23u, 28u));
 }
 
 void SimpleEQAudioProcessorEditor::resized()
@@ -484,7 +493,7 @@ void SimpleEQAudioProcessorEditor::resized()
 
     responseCurveComponent.setBounds(responseArea);
 
-    bounds.removeFromTop(5);
+    bounds.removeFromTop(10);
 
     auto lowCutArea = bounds.removeFromLeft(bounds.getWidth() * 0.33);
     auto highCutArea = bounds.removeFromRight(bounds.getWidth() * 0.5);
